@@ -114,6 +114,15 @@ angular.module('slick', [])
             if currentIndex?
               sl.slideHandler(currentIndex)
 
+          slider.on 'reInit', (sl) ->
+            scope.onReInit() if attrs.onReInit
+
+          slider.on 'setPosition', (sl) ->
+            scope.onSetPosition() if attrs.onSetPosition
+
+          slider.on 'swipe', (sl) ->
+            scope.onSwipe() if attrs.onSwipe
+
           slider.on 'afterChange', (event, slick, currentSlide, nextSlide) ->
             scope.onAfterChange() if scope.onAfterChange
 
@@ -122,6 +131,18 @@ angular.module('slick', [])
                 currentIndex = currentSlide
                 scope.currentIndex = currentSlide
               )
+
+          slider.on 'beforeChange', (sl) ->
+            scope.onBeforeChange() if attrs.onBeforeChange
+
+          slider.on 'breakpoint', (sl) ->
+            scope.onBreakpoint() if attrs.onBreakpoint
+
+          slider.on 'destroy', (sl) ->
+            scope.onDestroy() if attrs.onDestroy
+
+          slider.on 'edge', (sl) ->
+            scope.onEdge() if attrs.onEdge
 
           scope.$watch("currentIndex", (newVal, oldVal) ->
             if currentIndex? and newVal? and newVal != currentIndex
