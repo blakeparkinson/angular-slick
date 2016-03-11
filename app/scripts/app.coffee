@@ -27,6 +27,7 @@ angular.module('slick', [])
       infinite: "@"
       initialSlide: "@"
       lazyLoad: "@"
+      mobileFirst: "@"
       onBeforeChange: "&"
       onAfterChange: "&"
       onInit: "&"
@@ -85,6 +86,7 @@ angular.module('slick', [])
             easing: scope.easing or "linear"
             fade: scope.fade is "true"
             focusOnSelect: scope.focusOnSelect is "true"
+            mobileFirst: scope.mobileFirst is "true"
             infinite: scope.infinite isnt "false"
             initialSlide:scope.initialSlide or 0
             lazyLoad: scope.lazyLoad or "ondemand"
