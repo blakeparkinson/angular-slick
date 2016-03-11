@@ -53,14 +53,14 @@ angular.module('slick', [])
     link: (scope, element, attrs) ->
       destroySlick = () ->
         $timeout(() ->
-          slider = $(element)
+          slider = angular.element(element)
           slider.slick('unslick')
           slider.find('.slick-list').remove()
           slider
         )
       initializeSlick = () ->
         $timeout(() ->
-          slider = $(element)
+          slider = angular.element(element)
 
           currentIndex = scope.currentIndex if scope.currentIndex?
 
@@ -72,8 +72,8 @@ angular.module('slick', [])
             adaptiveHeight: scope.adaptiveHeight is "true"
             arrows: scope.arrows isnt "false"
             asNavFor: if scope.asNavFor then scope.asNavFor else undefined
-            appendArrows: if scope.appendArrows then $(scope.appendArrows) else $(element)
-            appendDots: if scope.appendDots then $(scope.appendDots) else $(element)
+            appendArrows: if scope.appendArrows then angular.element(scope.appendArrows) else angular.element(element)
+            appendDots: if scope.appendDots then angular.element(scope.appendDots) else angular.element(element)
             autoplay: scope.autoplay is "true"
             autoplaySpeed: if scope.autoplaySpeed? then parseInt(scope.autoplaySpeed, 10) else 3000
             centerMode: scope.centerMode is "true"
@@ -105,8 +105,8 @@ angular.module('slick', [])
             useCSS: scope.useCSS isnt "false"
             variableWidth: scope.variableWidth is "true"
             vertical: scope.vertical is "true"
-            prevArrow: if scope.prevArrow then $(scope.prevArrow) else undefined
-            nextArrow: if scope.nextArrow then $(scope.nextArrow) else undefined
+            prevArrow: if scope.prevArrow then angular.element(scope.prevArrow) else undefined
+            nextArrow: if scope.nextArrow then angular.element(scope.nextArrow) else undefined
 
 
           slider.on 'init', (sl) ->
