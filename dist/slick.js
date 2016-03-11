@@ -28,6 +28,7 @@ angular.module('slick', []).directive('slick', [
         infinite: '@',
         initialSlide: '@',
         lazyLoad: '@',
+        mobileFirst: '@',
         onBeforeChange: '&',
         onAfterChange: '&',
         onInit: '&',
@@ -56,7 +57,7 @@ angular.module('slick', []).directive('slick', [
         destroySlick = function () {
           return $timeout(function () {
             var slider;
-            slider = $(element);
+            slider = angular.element(element);
             slider.slick('unslick');
             slider.find('.slick-list').remove();
             return slider;
@@ -65,7 +66,7 @@ angular.module('slick', []).directive('slick', [
         initializeSlick = function () {
           return $timeout(function () {
             var currentIndex, customPaging, slider;
-            slider = $(element);
+            slider = angular.element(element);
             if (scope.currentIndex != null) {
               currentIndex = scope.currentIndex;
             }
@@ -80,8 +81,8 @@ angular.module('slick', []).directive('slick', [
               adaptiveHeight: scope.adaptiveHeight === 'true',
               arrows: scope.arrows !== 'false',
               asNavFor: scope.asNavFor ? scope.asNavFor : void 0,
-              appendArrows: scope.appendArrows ? $(scope.appendArrows) : $(element),
-              appendDots: scope.appendDots ? $(scope.appendDots) : $(element),
+              appendArrows: scope.appendArrows ? angular.element(scope.appendArrows) : angular.element(element),
+              appendDots: scope.appendDots ? angular.element(scope.appendDots) : angular.element(element),
               autoplay: scope.autoplay === 'true',
               autoplaySpeed: scope.autoplaySpeed != null ? parseInt(scope.autoplaySpeed, 10) : 3000,
               centerMode: scope.centerMode === 'true',
@@ -93,8 +94,9 @@ angular.module('slick', []).directive('slick', [
               easing: scope.easing || 'linear',
               fade: scope.fade === 'true',
               focusOnSelect: scope.focusOnSelect === 'true',
+              mobileFirst: scope.mobileFirst === 'true',
               infinite: scope.infinite !== 'false',
-              initialSlide: scope.initialSlide || 0,
+              initialSlide: scope.initialSlide != null ? parseInt(scope.initialSlide, 10) : 0,
               lazyLoad: scope.lazyLoad || 'ondemand',
               beforeChange: attrs.onBeforeChange ? scope.onBeforeChange : void 0,
               onReInit: attrs.onReInit ? scope.onReInit : void 0,
@@ -113,8 +115,8 @@ angular.module('slick', []).directive('slick', [
               useCSS: scope.useCSS !== 'false',
               variableWidth: scope.variableWidth === 'true',
               vertical: scope.vertical === 'true',
-              prevArrow: scope.prevArrow ? $(scope.prevArrow) : void 0,
-              nextArrow: scope.nextArrow ? $(scope.nextArrow) : void 0
+              prevArrow: scope.prevArrow ? angular.element(scope.prevArrow) : void 0,
+              nextArrow: scope.nextArrow ? angular.element(scope.nextArrow) : void 0
             });
             slider.on('init', function (sl) {
               if (attrs.onInit) {
@@ -122,6 +124,21 @@ angular.module('slick', []).directive('slick', [
               }
               if (currentIndex != null) {
                 return sl.slideHandler(currentIndex);
+              }
+            });
+            slider.on('reInit', function (sl) {
+              if (attrs.onReInit) {
+                return scope.onReInit();
+              }
+            });
+            slider.on('setPosition', function (sl) {
+              if (attrs.onSetPosition) {
+                return scope.onSetPosition();
+              }
+            });
+            slider.on('swipe', function (sl) {
+              if (attrs.onSwipe) {
+                return scope.onSwipe();
               }
             });
             slider.on('afterChange', function (event, slick, currentSlide, nextSlide) {
@@ -133,6 +150,26 @@ angular.module('slick', []).directive('slick', [
                   currentIndex = currentSlide;
                   return scope.currentIndex = currentSlide;
                 });
+              }
+            });
+            slider.on('beforeChange', function (sl) {
+              if (attrs.onBeforeChange) {
+                return scope.onBeforeChange();
+              }
+            });
+            slider.on('breakpoint', function (sl) {
+              if (attrs.onBreakpoint) {
+                return scope.onBreakpoint();
+              }
+            });
+            slider.on('destroy', function (sl) {
+              if (attrs.onDestroy) {
+                return scope.onDestroy();
+              }
+            });
+            slider.on('edge', function (sl) {
+              if (attrs.onEdge) {
+                return scope.onEdge();
               }
             });
             return scope.$watch('currentIndex', function (newVal, oldVal) {
