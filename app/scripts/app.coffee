@@ -54,14 +54,14 @@ angular.module('slick', [])
     link: (scope, element, attrs) ->
       destroySlick = () ->
         $timeout(() ->
-          slider = angular.element(element)
+          slider = $(element)
           slider.slick('unslick')
           slider.find('.slick-list').remove()
           slider
         )
       initializeSlick = () ->
         $timeout(() ->
-          slider = angular.element(element)
+          slider = $(element)
 
           currentIndex = scope.currentIndex if scope.currentIndex?
 

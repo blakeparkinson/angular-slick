@@ -57,7 +57,7 @@ angular.module('slick', []).directive('slick', [
         destroySlick = function () {
           return $timeout(function () {
             var slider;
-            slider = angular.element(element);
+            slider = $(element);
             slider.slick('unslick');
             slider.find('.slick-list').remove();
             return slider;
@@ -66,7 +66,7 @@ angular.module('slick', []).directive('slick', [
         initializeSlick = function () {
           return $timeout(function () {
             var currentIndex, customPaging, slider;
-            slider = angular.element(element);
+            slider = $(element);
             if (scope.currentIndex != null) {
               currentIndex = scope.currentIndex;
             }
